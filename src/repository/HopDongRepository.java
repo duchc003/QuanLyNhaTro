@@ -13,6 +13,7 @@ import java.util.List;
 import model.HopDong;
 import model.KhachThue;
 import model.DinhVu;
+import model.HoaDonDinhVuAdd;
 import model.Phong;
 import model.PhongThue;
 import model.ThietBi;
@@ -205,7 +206,7 @@ public class HopDongRepository {
         }
         return check > 0;
     }
-    
+
     public boolean addPhongThueKhachPhuThuoc(PhongThue phongThue) {
         String query = "INSERT INTO [dbo].[Phong_Thue]\n"
                 + "           ([IDKhachThue]\n"
@@ -440,6 +441,8 @@ public class HopDongRepository {
         }
         return null;
     }
+
+
 
     public static void main(String[] args) {
         System.out.println(new HopDongRepository().getAllHopDong().toString());

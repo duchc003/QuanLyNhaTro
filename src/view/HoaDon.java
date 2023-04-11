@@ -41,6 +41,7 @@ import service.QuanLyHoaDonService;
 import viewmodel.HoaDonViewModel;
 import javax.swing.DefaultComboBoxModel;
 import model.LoaiPhong;
+import model.Phong;
 import model.ThongTInHooaDon;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.STBorder;
 import service.Impl.QuanLyChiTietHoaDonServiceImpl;
@@ -1089,6 +1090,10 @@ public class HoaDon extends javax.swing.JInternalFrame {
                     dinhVuAddDien.setSoDien(soDien);
                     dinhVuAddDien.setGhiChu(txtGhiChu.getText());
                     donRepository.addHoaDonDien(dinhVuAddDien);
+                    Phong p = new Phong();
+                    p.setSoDien(soDien);
+                    donRepository.updateSoDien(p, (String) tblPhongDinhVu.getValueAt(dong, 0));
+                    loadTablePhongDinhVu(donRepository.getALL());
                     try {
                         XWPFDocument document = new XWPFDocument();
                         XWPFParagraph paragraph = document.createParagraph();
@@ -1218,6 +1223,10 @@ public class HoaDon extends javax.swing.JInternalFrame {
                     dinhVuAddNuoc.setSoNuoc(soNuoc);
                     dinhVuAddNuoc.setGhiChu(txtGhiChu.getText());
                     donRepository.addHoaDonNuoc(dinhVuAddNuoc);
+                    Phong p = new Phong();
+                    p.setSoNuoc(soNuoc);
+                    donRepository.updateSoDien(p, (String) tblPhongDinhVu.getValueAt(dong, 0));
+                    loadTablePhongDinhVu(donRepository.getALL());
                     try {
                         XWPFDocument document1 = new XWPFDocument();
                         XWPFParagraph paragraph = document1.createParagraph();
@@ -1746,5 +1755,12 @@ public class HoaDon extends javax.swing.JInternalFrame {
         cboTenPhong.setSelectedItem(ds.getTenPhong());
         double gia = (double) tbDSHienThi.getValueAt(row, 3);
         txtTienPhong.setText(String.valueOf(gia));
+    }
+    
+    private void clearDinhVu(){
+        dtmDinhVu.setRowCount(0);
+        txtGhiChu.setText("");
+        ngayBatDau.setDate(null);
+        ngayKetThuc.setDate(null);
     }
 }

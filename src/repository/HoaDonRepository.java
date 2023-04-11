@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import model.HoaDonDinhVuAdd;
+import model.Phong;
 import util.ConnectDB;
 import view.HoaDon;
 import viewmodel.DinhVuTheoPhong;
@@ -136,6 +137,34 @@ public class HoaDonRepository {
             ps.setObject(4, hoaDon.getNgayKetThuc());
             ps.setObject(5, hoaDon.getSoTien());
             ps.setObject(6, hoaDon.getGhiChu());
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return check > 0;
+    }
+
+    public boolean updateSoDien(Phong phong, String ten) {
+        String query = "UPDATE [dbo].[PhongTro]\n"
+                + "   SET [SoDien] = ?\n"
+                + " WHERE TenPhong = ?";
+        int check = 0;
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            ps.setObject(1, phong.getSoDien());
+            ps.setObject(2, ten);
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return check > 0;
+    }
+
+    public boolean updateSoNuoc(Phong phong, String ten) {
+        String query = "UPDATE [dbo].[PhongTro]\n"
+                + "   SET [SoNuoc] = ?\n"
+                + " WHERE TenPhong = ?";
+        int check = 0;
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            ps.setObject(1, phong.getSoNuoc());
+            ps.setObject(2, ten);
             check = ps.executeUpdate();
         } catch (Exception e) {
         }

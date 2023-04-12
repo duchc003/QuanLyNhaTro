@@ -4,6 +4,12 @@
  */
 package view;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+
 /**
  *
  * @author ASUS
@@ -16,6 +22,12 @@ public class DongHoaDon extends javax.swing.JFrame {
     public DongHoaDon() {
         initComponents();
         this.setLocationRelativeTo(null);
+        txtTenPhong.setVisible(false);
+        txtTien.setVisible(false);
+        txtTenKhach.setVisible(false);
+        txtTenPhong.setVisible(false);
+        txtNgayBatDau.setVisible(false);
+        txtNgayKT.setVisible(false);
     }
 
     /**
@@ -27,45 +39,105 @@ public class DongHoaDon extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnDongTienKiDau = new javax.swing.JButton();
+        txtTenPhong = new javax.swing.JTextField();
+        txtTien = new javax.swing.JTextField();
+        txtNgayBatDau = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
+        btnDongHetSoTienPhong = new javax.swing.JButton();
+        txtTenKhach = new javax.swing.JTextField();
+        txtNgayKT = new com.toedter.calendar.JDateChooser();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton1.setBackground(new java.awt.Color(102, 255, 102));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setText("Đóng Tiền Kì Đầu");
+        btnDongTienKiDau.setBackground(new java.awt.Color(102, 255, 102));
+        btnDongTienKiDau.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDongTienKiDau.setText("Đóng Tiền Kì Đầu");
+        btnDongTienKiDau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDongTienKiDauActionPerformed(evt);
+            }
+        });
+
+        txtTenPhong.setText("jTextField1");
+
+        txtTien.setText("jTextField1");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+            .addComponent(btnDongTienKiDau, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtTenPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTien, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(txtNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDongTienKiDau, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTenPhong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton2.setBackground(new java.awt.Color(102, 255, 102));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setText("Đóng Hết Số Tiền Phòng");
+        btnDongHetSoTienPhong.setBackground(new java.awt.Color(102, 255, 102));
+        btnDongHetSoTienPhong.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnDongHetSoTienPhong.setText("Đóng Hết Số Tiền Phòng");
+        btnDongHetSoTienPhong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDongHetSoTienPhongActionPerformed(evt);
+            }
+        });
+
+        txtTenKhach.setText("jTextField3");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnDongHetSoTienPhong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addComponent(txtTenKhach, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(54, 54, 54)
+                        .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDongHetSoTienPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtTenKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -85,6 +157,73 @@ public class DongHoaDon extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnDongTienKiDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongTienKiDauActionPerformed
+        HoaDonPhongSauKhiTaoHopDong donPhongSauKhiTaoHopDong = new HoaDonPhongSauKhiTaoHopDong();
+        FromHopDong fromHopDong = new FromHopDong();
+        if (fromHopDong.cbbKiThanhToan().getSelectedIndex() == 1) {
+            donPhongSauKhiTaoHopDong.soTienCanDong().setText(txtTien.getText());
+        } else if (fromHopDong.cbbKiThanhToan().getSelectedIndex() == 2) {
+            // Nếu chọn thanh toán theo quý, tiền cọc sẽ là 3 tháng giá phòng
+            double giaPhong = Double.parseDouble(txtTien.getText());
+            int tienCoc = (int) Math.round(giaPhong * 3);
+            donPhongSauKhiTaoHopDong.soTienCanDong().setText(String.valueOf(tienCoc));
+        } else if (fromHopDong.cbbKiThanhToan().getSelectedIndex() == 3) {
+            // Nếu chọn thanh toán theo năm, tiền cọc là 6 tháng giá phòng
+            double giaPhong = Double.parseDouble(txtTien.getText());
+            int tienCoc = (int) Math.round(giaPhong * 6);
+            donPhongSauKhiTaoHopDong.soTienCanDong().setText(String.valueOf(tienCoc));
+        } else {
+            // Nếu không chọn kiểu thanh toán nào, tiền cọc là 0
+            donPhongSauKhiTaoHopDong.soTienCanDong().setText("0");
+        }
+        donPhongSauKhiTaoHopDong.txtTenKhach().setText(txtTenKhach.getText());
+        donPhongSauKhiTaoHopDong.txtPhong().setText(txtTenPhong.getText());
+        donPhongSauKhiTaoHopDong.setDefaultCloseOperation(FromHopDong.DO_NOTHING_ON_CLOSE);
+        donPhongSauKhiTaoHopDong.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Xử lý sự kiện đóng cửa sổ form b mà không tắt form a
+                donPhongSauKhiTaoHopDong.setVisible(false);
+            }
+        });
+        donPhongSauKhiTaoHopDong.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnDongTienKiDauActionPerformed
+
+    private void btnDongHetSoTienPhongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongHetSoTienPhongActionPerformed
+        HoaDonPhongSauKhiTaoHopDong donPhongSauKhiTaoHopDong = new HoaDonPhongSauKhiTaoHopDong();
+        FromHopDong fromHopDong = new FromHopDong();
+        LocalDate startDate = txtNgayBatDau.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate endDate = txtNgayKT.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        
+        long numberOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+        
+        double tienPhong = Double.parseDouble(txtTien.getText());
+
+// Tính số ngày trong tháng bắt đầu từ startDate
+        LocalDate endOfMonth = startDate.withDayOfMonth(startDate.lengthOfMonth());
+        int numberOfDaysInMonth = (int) (startDate.until(endOfMonth, ChronoUnit.DAYS) + 1);
+
+// Tính số tiền phòng mỗi ngày
+        int tienPhongMoiNgay = (int) Math.ceil(tienPhong / numberOfDaysInMonth);
+
+// Tính tổng số tiền phòng
+        int tongTienPhong = (int) (tienPhongMoiNgay * numberOfDays);
+        donPhongSauKhiTaoHopDong.txtTenKhach().setText(txtTenKhach.getText());
+        donPhongSauKhiTaoHopDong.txtPhong().setText(txtTenPhong.getText());
+        donPhongSauKhiTaoHopDong.soTienCanDong().setText(String.valueOf(tongTienPhong));
+        donPhongSauKhiTaoHopDong.setDefaultCloseOperation(FromHopDong.DO_NOTHING_ON_CLOSE);
+        donPhongSauKhiTaoHopDong.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Xử lý sự kiện đóng cửa sổ form b mà không tắt form a
+                donPhongSauKhiTaoHopDong.setVisible(false);
+            }
+        });
+        donPhongSauKhiTaoHopDong.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnDongHetSoTienPhongActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,9 +261,35 @@ public class DongHoaDon extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnDongHetSoTienPhong;
+    private javax.swing.JButton btnDongTienKiDau;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private com.toedter.calendar.JDateChooser txtNgayBatDau;
+    private com.toedter.calendar.JDateChooser txtNgayKT;
+    private javax.swing.JTextField txtTenKhach;
+    private javax.swing.JTextField txtTenPhong;
+    private javax.swing.JTextField txtTien;
     // End of variables declaration//GEN-END:variables
+
+    public javax.swing.JTextField txtTenKhach() {
+        return txtTenKhach;
+    }
+    
+    public javax.swing.JTextField txtTenPhong() {
+        return txtTenPhong;
+    }
+    
+    public javax.swing.JTextField txtTien() {
+        return txtTien;
+    }
+    
+    public com.toedter.calendar.JDateChooser getTxtNgayBatDau() {
+        return txtNgayBatDau;
+    }
+
+    public com.toedter.calendar.JDateChooser getTxtNgayKT() {
+        return txtNgayKT;
+    }
 }

@@ -40,6 +40,7 @@ import service.impl.QuanLyHoaDonServiceImpl;
 import service.QuanLyHoaDonService;
 import viewmodel.HoaDonViewModel;
 import javax.swing.DefaultComboBoxModel;
+import model.DinhVu;
 import model.LoaiPhong;
 import model.Phong;
 import model.ThongTInHooaDon;
@@ -381,10 +382,11 @@ public class HoaDon extends javax.swing.JInternalFrame {
                         .addGap(49, 49, 49)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ngayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ngayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
-                        .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61))))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(ngayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(61, 199, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -393,7 +395,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel29)
@@ -962,7 +964,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
                 .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1081,6 +1083,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
                 long all = (long) tblDinhVu.getValueAt(i, 5);
                 if (tenDinhVu.contains("Điện")) {
                     soDien = (int) tblDinhVu.getValueAt(i, 3); // retrieve "so dien" value from the 4th column
+                    HoaDonDinhVu donDinhVu = new HoaDonDinhVu();
                     HoaDonDinhVuAdd dinhVuAddDien = new HoaDonDinhVuAdd();
                     dinhVuAddDien.setIDPhong(1);
                     dinhVuAddDien.setMaHoaDon(sb.toString());
@@ -1093,6 +1096,10 @@ public class HoaDon extends javax.swing.JInternalFrame {
                     Phong p = new Phong();
                     p.setSoDien(soDien);
                     donRepository.updateSoDien(p, (String) tblPhongDinhVu.getValueAt(dong, 0));
+//                    donDinhVu = donRepository.findByIdDinhVu(sb.toString());
+//                    donDinhVu.setId(donDinhVu.getIdHoaDon());
+//                    List<DinhVu> list = donRepository.findByIdDinhVu1((int) tblPhongDinhVu.getValueAt(dong, 0));
+//                    donRepository.updateDinhVuChiTiet(donDinhVu, list.get(i).getIdDinhVu());
                     loadTablePhongDinhVu(donRepository.getALL());
                     try {
                         XWPFDocument document = new XWPFDocument();
@@ -1225,7 +1232,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
                     donRepository.addHoaDonNuoc(dinhVuAddNuoc);
                     Phong p = new Phong();
                     p.setSoNuoc(soNuoc);
-                    donRepository.updateSoDien(p, (String) tblPhongDinhVu.getValueAt(dong, 0));
+                    donRepository.updateSoNuoc(p, (String) tblPhongDinhVu.getValueAt(dong, 0));
                     loadTablePhongDinhVu(donRepository.getALL());
                     try {
                         XWPFDocument document1 = new XWPFDocument();
@@ -1339,6 +1346,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
                     dinhVuAdd.setSoTien((long) tblDinhVu.getValueAt(i, 5));
                     dinhVuAdd.setGhiChu(txtGhiChu.getText());
                     donRepository.addHoaDonAll(dinhVuAdd);
+                    loadTablePhongDinhVu(donRepository.getALL());
                     try {
                         XWPFDocument document2 = new XWPFDocument();
                         XWPFParagraph paragraph = document2.createParagraph();
@@ -1412,6 +1420,8 @@ public class HoaDon extends javax.swing.JInternalFrame {
                     }
                     System.out.println("File created successfully!");
                 }
+                clearDinhVu();
+                JOptionPane.showMessageDialog(this, "Tạo Hóa Đơn Thành Công");
             }
         }
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed

@@ -4,6 +4,7 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
 import model.KhachThue;
 import model.Phong;
 import model.PhongThue;
@@ -51,6 +52,8 @@ public class ThemNguoiPhuThuoc extends javax.swing.JFrame {
         PhongThue phongThue = new PhongThue();
         phongThue = new PhongThue(kt.getId(), p.getId(), Float.parseFloat(lblGia.getText()), "Người Phụ Thuộc");
         hopDongService.addPhongThueKhachPhuThuoc(phongThue);
+        JOptionPane.showMessageDialog(this, "Thêm Thành Công");
+        this.dispose();
     }
 
     /**

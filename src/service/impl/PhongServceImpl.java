@@ -5,11 +5,13 @@
 package service.impl;
 
 import java.util.List;
+import model.HoaDonPhong;
 import model.KhachThue;
 import model.LoaiPhong;
 import model.Phong;
 import model.Tang;
 import model.ThongTInHooaDon;
+import repository.HoaDonRepository;
 import repository.PhongRepository;
 import service.PhongServce;
 import viewmodel.DinhVuPhong;
@@ -26,6 +28,8 @@ import viewmodel.TraPhong;
 public class PhongServceImpl implements PhongServce {
 
     private PhongRepository repo = new PhongRepository();
+    
+    private HoaDonRepository hoaDonRe = new HoaDonRepository();
 
     @Override
     public List<PhongView> getALL() {
@@ -172,6 +176,16 @@ public class PhongServceImpl implements PhongServce {
     @Override
     public List<ThongTInHooaDon> getALLHoaDonPhong() {
         return repo.getALLHoaDonPhong();
+    }
+
+    @Override
+    public String addHoaDonPhong(HoaDonPhong hoaDon) {
+        boolean addHoaDonPhong = hoaDonRe.addHoaDonPhong(hoaDon);
+        if (addHoaDonPhong) {
+            return "add thành công";
+        }else{
+            return "add thất bại";
+        }
     }
 
 }

@@ -6,6 +6,7 @@ package service;
 
 import java.util.List;
 import model.DinhVu;
+import model.HoaDonPhong;
 import model.KhachThue;
 import model.LoaiPhong;
 import model.Phong;
@@ -76,5 +77,7 @@ public interface PhongServce {
     Phong getOneMoTa(String ten);
     
     List<ThongTInHooaDon> getALLHoaDonPhong();
+    
+    String addHoaDonPhong(HoaDonPhong hoaDon);
     
 }

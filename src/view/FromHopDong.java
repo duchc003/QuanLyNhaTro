@@ -263,13 +263,17 @@ public class FromHopDong extends javax.swing.JFrame {
                 }
                 loadTableThietBị(hopDongService.getAllThietBi());
                 PhongThue phongThue = new PhongThue();
-                phongThue = new PhongThue(kt.getId(), p.getId(), txtNgayBatDau.getDate(), txtNgayKetThuc.getDate(), Float.parseFloat(txtTienPhong.getText()), "Đang Thuê");
+                phongThue = new PhongThue(kt.getId(), p.getId(), txtNgayBatDau.getDate(), txtNgayKetThuc.getDate(), Float.parseFloat(txtTienPhong.getText()), "Đại diện hợp đồng");
                 hopDongService.addPhongThue(phongThue);
 
-                PhongJframe phongJframe = new PhongJframe();
-                phongJframe.loadPhong(phongServce.getALL());
+                DongHoaDon dhd1 = new DongHoaDon();
+                dhd1.txtTenPhong().setText(txtPhong.getText());
+                dhd1.txtTenKhach().setText(txtHoTenKhach.getText());
+                dhd1.txtTien().setText(txtTienPhong.getText());
+                dhd1.getTxtNgayBatDau().setDate(txtNgayBatDau.getDate());
+                dhd1.getTxtNgayKT().setDate(txtNgayKetThuc.getDate());
+                dhd1.setVisible(true);
                 this.dispose();
-
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -371,7 +375,7 @@ public class FromHopDong extends javax.swing.JFrame {
         jLabel72.setText("Thanh Toán Mỗi lần");
 
         cbbKiThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cbbKiThanhToan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tháng", "Quý", "Năm" }));
+        cbbKiThanhToan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Tháng", "Quý", "Năm" }));
         cbbKiThanhToan.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cbbKiThanhToanItemStateChanged(evt);
@@ -384,7 +388,7 @@ public class FromHopDong extends javax.swing.JFrame {
         });
 
         cbbThanhToanMoiLan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cbbThanhToanMoiLan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 ", "3 ", "12 " }));
+        cbbThanhToanMoiLan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "1 ", "3 ", "12 " }));
         cbbThanhToanMoiLan.setEnabled(false);
 
         btnTaoHopDong.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -440,15 +444,17 @@ public class FromHopDong extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addGap(59, 59, 59)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel21Layout.createSequentialGroup()
-                        .addComponent(cbbThanhToanMoiLan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbbThanhToanMoiLan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbNgayChot, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTaoHopDong, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(btnTaoHopDong)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel21Layout.createSequentialGroup()
                 .addComponent(jLabel66)
@@ -681,7 +687,7 @@ public class FromHopDong extends javax.swing.JFrame {
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel73)
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addComponent(jLabel74)
@@ -698,21 +704,21 @@ public class FromHopDong extends javax.swing.JFrame {
                         .addGap(59, 59, 59)
                         .addComponent(txtSoDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel22Layout.createSequentialGroup()
-                        .addComponent(jLabel75)
-                        .addGap(27, 27, 27)
-                        .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel22Layout.createSequentialGroup()
-                        .addComponent(jLabel78)
-                        .addGap(50, 50, 50)
-                        .addComponent(txtCmnd, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel22Layout.createSequentialGroup()
                         .addComponent(jLabel90)
                         .addGap(50, 50, 50)
                         .addComponent(txtGmail, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addComponent(jLabel79)
                         .addGap(43, 43, 43)
-                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel22Layout.createSequentialGroup()
+                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel78)
+                            .addComponent(jLabel75))
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNgaySinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtCmnd, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
@@ -740,8 +746,8 @@ public class FromHopDong extends javax.swing.JFrame {
                         .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addComponent(jLabel85)
-                        .addGap(23, 23, 23)
-                        .addComponent(txtTienPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTienPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addComponent(jLabel86, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
@@ -853,7 +859,7 @@ public class FromHopDong extends javax.swing.JFrame {
                                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel86)
                                     .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 42, Short.MAX_VALUE))
                     .addGroup(jPanel22Layout.createSequentialGroup()
                         .addComponent(jLabel87)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -862,8 +868,8 @@ public class FromHopDong extends javax.swing.JFrame {
                         .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel88)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane16, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -913,17 +919,35 @@ public class FromHopDong extends javax.swing.JFrame {
 
     private void cbbKiThanhToanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbKiThanhToanItemStateChanged
         int selectedItem = (int) cbbKiThanhToan.getSelectedIndex();
-        if (selectedItem == 0) {
-            cbbThanhToanMoiLan.setSelectedIndex(0);
-        } else if (selectedItem == 1) {
+        if (selectedItem == 1) {
             cbbThanhToanMoiLan.setSelectedIndex(1);
-        } else {
+        } else if (selectedItem == 2) {
             cbbThanhToanMoiLan.setSelectedIndex(2);
+        } else if (selectedItem == 3) {
+            cbbThanhToanMoiLan.setSelectedIndex(3);
+        } else {
+            cbbThanhToanMoiLan.setSelectedIndex(0);
         }
     }//GEN-LAST:event_cbbKiThanhToanItemStateChanged
 
     private void cbbKiThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbKiThanhToanActionPerformed
-
+        if (cbbKiThanhToan.getSelectedIndex() == 1) {
+            // Nếu chọn thanh toán theo tháng, tiền cọc là một tháng giá phòng
+            txtTienCoc.setText(txtTienPhong.getText());
+        } else if (cbbKiThanhToan.getSelectedIndex() == 2) {
+            // Nếu chọn thanh toán theo quý, tiền cọc sẽ là 3 tháng giá phòng
+            double giaPhong = Double.parseDouble(txtTienPhong.getText());
+            int tienCoc = (int) Math.round(giaPhong * 3);
+            txtTienCoc.setText(String.valueOf(tienCoc));
+        } else if (cbbKiThanhToan.getSelectedIndex() == 3) {
+            // Nếu chọn thanh toán theo năm, tiền cọc là 6 tháng giá phòng
+            double giaPhong = Double.parseDouble(txtTienPhong.getText());
+            int tienCoc = (int) Math.round(giaPhong * 6);
+            txtTienCoc.setText(String.valueOf(tienCoc));
+        } else {
+            // Nếu không chọn kiểu thanh toán nào, tiền cọc là 0
+            txtTienCoc.setText("0");
+        }
     }//GEN-LAST:event_cbbKiThanhToanActionPerformed
 
     /**
@@ -1033,6 +1057,10 @@ public class FromHopDong extends javax.swing.JFrame {
         return txtPhong;
     }
 
+    public javax.swing.JComboBox<String> cbbKiThanhToan() {
+        return cbbKiThanhToan;
+    }
+
     public javax.swing.JTextField getKhuVuc() {
         return txtKhuVuc;
     }
@@ -1051,6 +1079,10 @@ public class FromHopDong extends javax.swing.JFrame {
 
     public javax.swing.JTextField getDienTich() {
         return txtDienTich;
+    }
+
+    public javax.swing.JTextField getTienCoc() {
+        return txtTienCoc;
     }
 
     public javax.swing.JTextArea getMoTa() {

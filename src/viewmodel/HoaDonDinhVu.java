@@ -9,15 +9,19 @@ package viewmodel;
  * @author ASUS
  */
 public class HoaDonDinhVu {
-    
+
+    int id;
+
+    int idHoaDon;
+
     private String tenPhong;
-    
+
     private String tenTang;
-    
+
     private String loaiPhong;
-    
+
     private int soDien;
-    
+
     private int soNuoc;
 
     public HoaDonDinhVu() {
@@ -29,6 +33,26 @@ public class HoaDonDinhVu {
         this.loaiPhong = loaiPhong;
         this.soDien = soDien;
         this.soNuoc = soNuoc;
+    }
+
+    public HoaDonDinhVu(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getIdHoaDon() {
+        return idHoaDon;
+    }
+
+    public void setIdHoaDon(int idHoaDon) {
+        this.idHoaDon = idHoaDon;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTenPhong() {
@@ -70,5 +94,5 @@ public class HoaDonDinhVu {
     public void setSoNuoc(int soNuoc) {
         this.soNuoc = soNuoc;
     }
-    
+
 }

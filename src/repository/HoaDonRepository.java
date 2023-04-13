@@ -48,7 +48,7 @@ public class HoaDonRepository {
     }
 
     public List<DinhVuTheoPhong> finByDinhVu(String ten) {
-        String query = "SELECT dbo.DinhVu.Name, dbo.DinhVu.Gia, dbo.DinhVu.DonVi\n"
+        String query = "SELECT dbo.DinhVu.ID, dbo.DinhVu.Name, dbo.DinhVu.Gia, dbo.DinhVu.DonVi\n"
                 + "FROM     dbo.ChiTietDinhVu INNER JOIN\n"
                 + "                  dbo.DinhVu ON dbo.ChiTietDinhVu.IDDinhVu = dbo.DinhVu.ID INNER JOIN\n"
                 + "                  dbo.PhongTro ON dbo.ChiTietDinhVu.IDPhongTro = dbo.PhongTro.ID\n"
@@ -59,9 +59,10 @@ public class HoaDonRepository {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(new DinhVuTheoPhong(
-                        rs.getString(1),
-                        rs.getLong(2),
-                        rs.getString(3)));
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getLong(3),
+                        rs.getString(4)));
             }
             return list;
         } catch (Exception e) {
@@ -77,9 +78,10 @@ public class HoaDonRepository {
                 + "           ,[NgayKetThuc]\n"
                 + "           ,[SoTien]\n"
                 + "           ,[SoDien]\n"
-                + "           ,[GhiChu])\n"
+                + "           ,[GhiChu]\n"
+                + "           ,[TrangThai])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?)";
         int check = 0;
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, hoaDon.getIDPhong());
@@ -89,6 +91,7 @@ public class HoaDonRepository {
             ps.setObject(5, hoaDon.getSoTien());
             ps.setObject(6, hoaDon.getSoDien());
             ps.setObject(7, hoaDon.getGhiChu());
+            ps.setObject(8, hoaDon.getTrangThai());
             check = ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -103,9 +106,10 @@ public class HoaDonRepository {
                 + "           ,[NgayKetThuc]\n"
                 + "           ,[SoTien]\n"
                 + "           ,[SoNuoc]\n"
-                + "           ,[GhiChu])\n"
+                + "           ,[GhiChu]\n"
+                + "           ,[TrangThai])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?,?)";
         int check = 0;
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, hoaDon.getIDPhong());
@@ -115,6 +119,7 @@ public class HoaDonRepository {
             ps.setObject(5, hoaDon.getSoTien());
             ps.setObject(6, hoaDon.getSoNuoc());
             ps.setObject(7, hoaDon.getGhiChu());
+            ps.setObject(8, hoaDon.getTrangThai());
             check = ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -204,24 +209,53 @@ public class HoaDonRepository {
         return check > 0;
     }
 
-    public boolean updateDinhVuChiTiet(HoaDonDinhVu phong, int ten) {
-        String query = "UPDATE [dbo].[ChiTietThietBi]\n"
+    public boolean updateDinhVuChiTiet(HoaDonDinhVu phong, int id) {
+        String query = "UPDATE [dbo].[ChiTietDinhVu]\n"
                 + "   SET [IDHoaDon] = ?\n"
                 + " WHERE ID = ?";
         int check = 0;
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, phong.getId());
-            ps.setObject(2, ten);
+            ps.setObject(2, id);
             check = ps.executeUpdate();
         } catch (Exception e) {
         }
         return check > 0;
     }
 
-    public HoaDonDinhVu findByIdDinhVu(String ten) {
+    public boolean updateThietBiChiTiet(HoaDonDinhVu phong, int id) {
+        String query = "UPDATE [dbo].[ChiTietThietBi]\n"
+                + "   SET [IDHoaDon] = ?\n"
+                + " WHERE ID = ?";
+        int check = 0;
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            ps.setObject(1, phong.getId());
+            ps.setObject(2, id);
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return check > 0;
+    }
+
+    public DinhVuTheoPhong findByIdDinhVu(int id) {
+        String query = "Select ID From ChiTietDinhVu Where IDDinhVu = ?";
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            ps.setObject(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new DinhVuTheoPhong(rs.getInt(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public HoaDonDinhVu findByIdDinhVu1(String id) {
         String query = "select ID from HoaDon where MaHoaDon = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
-            ps.setObject(1, ten);
+            List<DinhVu> list = new ArrayList<>();
+            ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 return new HoaDonDinhVu(rs.getInt(1));
@@ -232,19 +266,7 @@ public class HoaDonRepository {
         return null;
     }
 
-    public List<DinhVu> findByIdDinhVu1(int id) {
-        String query = "select ID from ChiTietDinhVu where IDPhongTro = ?";
-        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
-            List<DinhVu> list = new ArrayList<>();
-            ps.setObject(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new DinhVu(rs.getInt(1)));
-            }
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    public static void main(String[] args) {
+        System.out.println(new HoaDonRepository().finByDinhVu("P01"));
     }
 }

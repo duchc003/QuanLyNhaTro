@@ -10,7 +10,10 @@ import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
+import model.DinhVu;
 import util.ConnectDB;
+import viewmodel.HoaDonDinhVu;
 
 /**
  *
@@ -69,6 +72,36 @@ public class HoaDonThietBiRepo {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public HoaDonDinhVu findByIdThietBI(String ten) {
+        String query = "select ID from Thiet_Bi where Ten = ?";
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            List<DinhVu> list = new ArrayList<>();
+            ps.setObject(1, ten);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new HoaDonDinhVu(rs.getInt(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public HoaDonDinhVu findByIdThietBIChiTiet(int id) {
+        String query = "select ID from ChiTietThietBi where IDThietBi = ?";
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            List<DinhVu> list = new ArrayList<>();
+            ps.setObject(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new HoaDonDinhVu(rs.getInt(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void main(String[] args) {

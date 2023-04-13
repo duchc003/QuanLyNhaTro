@@ -12,6 +12,10 @@ import java.util.Date;
  */
 public class HoaDonDinhVuAdd {
     
+    private int IDHopDong;
+    
+    private int IDKhachThue;
+    
     private int IDPhong;
     
     private String maHoaDon;
@@ -27,6 +31,8 @@ public class HoaDonDinhVuAdd {
     private int soDien;
     
     private String ghiChu;
+    
+    private String trangThai;
 
     public HoaDonDinhVuAdd() {
     }
@@ -40,6 +46,30 @@ public class HoaDonDinhVuAdd {
         this.soNuoc = soNuoc;
         this.soDien = soDien;
         this.ghiChu = ghiChu;
+    }
+
+    public String getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public int getIDHopDong() {
+        return IDHopDong;
+    }
+
+    public void setIDHopDong(int IDHopDong) {
+        this.IDHopDong = IDHopDong;
+    }
+
+    public int getIDKhachThue() {
+        return IDKhachThue;
+    }
+
+    public void setIDKhachThue(int IDKhachThue) {
+        this.IDKhachThue = IDKhachThue;
     }
 
     public int getIDPhong() {

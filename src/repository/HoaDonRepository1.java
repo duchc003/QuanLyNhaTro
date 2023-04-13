@@ -92,20 +92,18 @@ public class HoaDonRepository1 {
                                   ,[NgayTaoHoaDon]
                                   ,[NgayKetThuc]
                                   ,[TienPhong]
-                                  ,[TienKhachDua]
                                   ,[GhiChu]
                                   ,[TrangThai])
                             VALUES
-                                  (?,?,?,?,?,?,?)
+                                  (?,?,?,?,?,?)
                        """;
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, hoaDonViewModel.getMaHoaDon());
             ps.setObject(2, hoaDonViewModel.getNgayTao());
             ps.setObject(3, hoaDonViewModel.getNgayKetThuc());
             ps.setObject(4, hoaDonViewModel.getTienPhong());
-            ps.setObject(5, hoaDonViewModel.getTienKhachDua());
-            ps.setObject(6, hoaDonViewModel.getGhiChu());
-            ps.setObject(7, hoaDonViewModel.getTrangThai());
+            ps.setObject(5, hoaDonViewModel.getGhiChu());
+            ps.setObject(6, hoaDonViewModel.getTrangThai());
             check = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace(System.out);

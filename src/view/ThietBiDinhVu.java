@@ -532,9 +532,8 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
             .addGap(0, 318, Short.MAX_VALUE)
         );
 
-        tbllistbangDv.setBackground(new java.awt.Color(153, 204, 255));
         tbllistbangDv.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        tbllistbangDv.setForeground(new java.awt.Color(0, 51, 255));
+        tbllistbangDv.setForeground(new java.awt.Color(255, 255, 255));
         tbllistbangDv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -669,31 +668,41 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
 
     private void btnxoaDvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnxoaDvActionPerformed
         // TODO add your handling code here:
-        int index = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa");
-        if (index == 0) {
-            String id = txtmaDV.getText();
-            qldv.xoa(id);
-            JOptionPane.showMessageDialog(this, "Xóa thành công");
-            listdv = qldv.getAll();
-            dodulieuDv(listdv);
-        } else if (index == 1) {
-            JOptionPane.showMessageDialog(this, "Đã hủy");
+        int row = tbllistbangDv.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 dòng trên table");
+        } else {
+            int index = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa");
+            if (index == 0) {
+                String id = txtmaDV.getText();
+                qldv.xoa(id);
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
+                listdv = qldv.getAll();
+                dodulieuDv(listdv);
+            } else if (index == 1) {
+                JOptionPane.showMessageDialog(this, "Đã hủy");
+            }
         }
     }//GEN-LAST:event_btnxoaDvActionPerformed
 
     private void btnSuaDvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaDvActionPerformed
         // TODO add your handling code here:
-        if (kiemTraDuLieuDv()) {
-            int index = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn Sửa");
-            if (index == 0) {
-                String id = txtmaDV.getText();
-                QLDichVu dv = layDuLieuTuFormDv();
-                qldv.sua(dv, id);
-                JOptionPane.showMessageDialog(this, "Sửa thành công");
-                listdv = qldv.getAll();
-                dodulieuDv(listdv);
-            } else if (index == 1) {
-                JOptionPane.showMessageDialog(this, "Đã hủy");
+        int row = tbllistbangDv.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 dòng trên table");
+        } else {
+            if (kiemTraDuLieuDv()) {
+                int index = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn Sửa");
+                if (index == 0) {
+                    String id = txtmaDV.getText();
+                    QLDichVu dv = layDuLieuTuFormDv();
+                    qldv.sua(dv, id);
+                    JOptionPane.showMessageDialog(this, "Sửa thành công");
+                    listdv = qldv.getAll();
+                    dodulieuDv(listdv);
+                } else if (index == 1) {
+                    JOptionPane.showMessageDialog(this, "Đã hủy");
+                }
             }
         }
     }//GEN-LAST:event_btnSuaDvActionPerformed
@@ -727,31 +736,40 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        int index = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa");
-        if (index == 0) {
-            String id = txtId.getText();
-            qltb.xoa(id);
-            JOptionPane.showMessageDialog(this, "Xóa thành công");
-            list = qltb.getAll();
-            dodulieu(list);
-        } else if (index == 1) {
-            JOptionPane.showMessageDialog(this, "Đã hủy");
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
-        if (kiemTraDuLieutb()) {
-            int index = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn Sửa");
+        int row = tbllistbang.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 dòng trên table");
+        } else {
+            int index = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa");
             if (index == 0) {
                 String id = txtId.getText();
-                QLThietBi tb = laydulieutuform();
-                qltb.sua(tb, id);
-                JOptionPane.showMessageDialog(this, "Sửa thành công");
+                qltb.xoa(id);
+                JOptionPane.showMessageDialog(this, "Xóa thành công");
                 list = qltb.getAll();
                 dodulieu(list);
             } else if (index == 1) {
                 JOptionPane.showMessageDialog(this, "Đã hủy");
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int row = tbllistbang.getSelectedRow();
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 dòng trên table");
+        } else {
+            if (kiemTraDuLieutb()) {
+                int index = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn Sửa");
+                if (index == 0) {
+                    String id = txtId.getText();
+                    QLThietBi tb = laydulieutuform();
+                    qltb.sua(tb, id);
+                    JOptionPane.showMessageDialog(this, "Sửa thành công");
+                    list = qltb.getAll();
+                    dodulieu(list);
+                } else if (index == 1) {
+                    JOptionPane.showMessageDialog(this, "Đã hủy");
+                }
             }
         }
     }//GEN-LAST:event_btnSuaActionPerformed

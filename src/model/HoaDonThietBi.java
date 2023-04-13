@@ -18,7 +18,7 @@ public class HoaDonThietBi {
     private int soluong;
     private Long giaTien;
 
-    public HoaDonThietBi(String TenPhong, String TenTang, String loaiPhong, String tenKhach, String TenTB, int soluong, Long giaTien) {
+    public HoaDonThietBi( String TenPhong, String TenTang, String loaiPhong, String tenKhach, String TenTB, int soluong, Long giaTien) {
         this.TenPhong = TenPhong;
         this.TenTang = TenTang;
         this.loaiPhong = loaiPhong;
@@ -27,7 +27,7 @@ public class HoaDonThietBi {
         this.soluong = soluong;
         this.giaTien = giaTien;
     }
-
+    
     public HoaDonThietBi() {
     }
 

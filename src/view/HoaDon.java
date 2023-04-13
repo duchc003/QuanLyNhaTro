@@ -75,6 +75,8 @@ public class HoaDon extends javax.swing.JInternalFrame {
     private List<DSNgayDongTienPhongViewModel> listDS;
     private QuanLyDSNgayDongTienPhongService quanLyDSService;
     private DefaultTableModel dtmHoaDonPhong = new DefaultTableModel();
+    private DefaultTableModel dtmHoaDonDinhVu = new DefaultTableModel();
+    private DefaultTableModel dtmHoaDonThietBi = new DefaultTableModel();
 
     public HoaDon() {
         initComponents();
@@ -112,6 +114,42 @@ public class HoaDon extends javax.swing.JInternalFrame {
                 x.getTenLoaiPhong(),
                 x.getSoTien(),
                 x.getNgayBD(),
+                x.getNgayKT(),
+                x.getTrangThai()
+            });
+        }
+    }
+
+    void loadTableHoaDonDinhVu(List<ThongTInHooaDon> lisst) {
+        dtmHoaDonDinhVu = (DefaultTableModel) jTable1.getModel();
+        for (ThongTInHooaDon x : lisst) {
+            dtmHoaDonDinhVu.addRow(new Object[]{
+                x.getMaHoaDon(),
+                x.getTenPhong(),
+                x.getTenTang(),
+                x.getTenLoaiPhong(),
+                x.getTenDinhVu(),
+                x.getNgayBD(),
+                x.getNgayKT(),
+                x.getSoTien(),
+                x.getNgayKT(),
+                x.getTrangThai()
+            });
+        }
+    }
+
+    void loadTableHoaDonThietBi(List<ThongTInHooaDon> lisst) {
+        dtmHoaDonThietBi = (DefaultTableModel) jTable2.getModel();
+        for (ThongTInHooaDon x : lisst) {
+            dtmHoaDonThietBi.addRow(new Object[]{
+                x.getMaHoaDon(),
+                x.getTenPhong(),
+                x.getTenTang(),
+                x.getTenLoaiPhong(),
+                x.getTenThietBi(),
+                x.getNgayBD(),
+                x.getNgayKT(),
+                x.getSoTien(),
                 x.getNgayKT(),
                 x.getTrangThai()
             });
@@ -368,9 +406,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane8)
-                        .addContainerGap())
+                    .addComponent(jScrollPane8)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
@@ -384,9 +420,9 @@ public class HoaDon extends javax.swing.JInternalFrame {
                             .addComponent(ngayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(ngayKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(61, 199, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
+                                .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -395,7 +431,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel29)
@@ -802,7 +838,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(54, 54, 54)
                         .addComponent(jButton1)
-                        .addGap(0, 148, Short.MAX_VALUE)))
+                        .addGap(0, 136, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -851,14 +887,14 @@ public class HoaDon extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Mã Hóa Đơn", "Tên Phòng", "Tầng", "Loại Phòng", "Tên Dịnh Vụ", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Số Điện", "Số Nước", "Tổng Tiền"
+                "Mã Hóa Đơn", "Tên Phòng", "Tầng", "Loại Phòng", "Tên Dịnh Vụ", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Tổng Tiền", "Trạng Thái"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Long.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -876,14 +912,14 @@ public class HoaDon extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Mã Hóa Đơn", "Tên Phòng", "Tầng", "Loại Phòng", "Khách Thuê", "Tên Thiết Bị", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Tổng Tiền"
+                "Mã Hóa Đơn", "Tên Phòng", "Tầng", "Loại Phòng", "Khách Thuê", "Tên Thiết Bị", "Ngày Bắt Đầu", "Ngày Kết Thúc", "Tổng Tiền", "TrangThai"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -940,7 +976,7 @@ public class HoaDon extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel11Layout.createSequentialGroup()
                         .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)
                             .addGroup(jPanel11Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(0, 0, Short.MAX_VALUE)))
@@ -977,8 +1013,8 @@ public class HoaDon extends javax.swing.JInternalFrame {
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -994,7 +1030,9 @@ public class HoaDon extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1277, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1766,8 +1804,8 @@ public class HoaDon extends javax.swing.JInternalFrame {
         double gia = (double) tbDSHienThi.getValueAt(row, 3);
         txtTienPhong.setText(String.valueOf(gia));
     }
-    
-    private void clearDinhVu(){
+
+    private void clearDinhVu() {
         dtmDinhVu.setRowCount(0);
         txtGhiChu.setText("");
         ngayBatDau.setDate(null);

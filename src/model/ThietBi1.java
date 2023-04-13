@@ -77,4 +77,9 @@ public class ThietBi1 {
         this.tinhTrang = tinhTrang;
     }
 
+    @Override
+    public String toString() {
+        return "ThietBi1{" + "id=" + id + ", ten=" + ten + ", soluong=" + soluong + ", giaTien=" + giaTien + ", moTa=" + moTa + ", tinhTrang=" + tinhTrang + '}';
+    }
+
 }

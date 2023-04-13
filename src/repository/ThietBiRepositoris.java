@@ -138,4 +138,8 @@ public class ThietBiRepositoris {
         }
         return null;
     }
+
+    public static void main(String[] args) {
+        System.out.println(new ThietBiRepositoris().getAll().toString());
+    }
 }

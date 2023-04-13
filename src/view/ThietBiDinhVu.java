@@ -4,11 +4,13 @@
  */
 package view;
 
+import java.util.ArrayList;
 import model.ThietBi1;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import repository.PhongRepository;
 import service.QuanLyDichVuSevires;
 import service.QuanLyThietBiSerivices;
 import service.impl.QuanLyDichVuSeviresImpl;
@@ -18,22 +20,26 @@ import viewmodel.QLThietBi;
 
 public class ThietBiDinhVu extends javax.swing.JInternalFrame {
 
-    private DefaultTableModel dtm;
-    private List<QLThietBi> list;
-    private DefaultTableModel dtmdv;
-    private List<QLDichVu> listdv;
+    private DefaultTableModel dtm = new DefaultTableModel();
+    private List<QLThietBi> list = new ArrayList<>();
+    private DefaultTableModel dtmdv = new DefaultTableModel();
+    private List<QLDichVu> listdv = new ArrayList<>();
     private QuanLyDichVuSevires qldv = new QuanLyDichVuSeviresImpl();
     private QuanLyThietBiSerivices qltb = new QuanLyThietBiSerivicesImpl();
-    
+    private PhongRepository phongRepository = new PhongRepository();
+
     public ThietBiDinhVu() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
+        dodulieu(qltb.getAll());
+        dodulieuDv(qldv.getAll());
     }
 
     private void dodulieu(List<QLThietBi> list) {
         dtm.setRowCount(0);
+        dtm = (DefaultTableModel) tbllistbang.getModel();
         for (QLThietBi qLThietBi : list) {
             dtm.addRow(qLThietBi.rowData());
         }
@@ -41,6 +47,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
 
     private void dodulieuDv(List<QLDichVu> listdv) {
         dtmdv.setRowCount(0);
+        dtmdv = (DefaultTableModel) tbllistbangDv.getModel();
         for (QLDichVu qLDichVu : listdv) {
             dtmdv.addRow(qLDichVu.rowData());
         }
@@ -62,16 +69,13 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         dv.setGia(Long.parseLong(txtgiaDv.getText()));
         dv.setMoTa(txtMotaDv.getText());
         dv.setDonVi(cboDonvi.getSelectedItem().toString());
-        if (rdoloai1.isSelected() == true) {
-            dv.setLoai(1);
-        } else {
-            dv.setLoai(2);
-        }
+        dv = phongRepository.getALLID((String) jComboBox1.getSelectedItem());
+        dv.setLoai(dv.getId());
         return dv;
     }
 
     private void dodulieulenform(int index) {
-        QLThietBi tb = list.get(index);
+        QLThietBi tb = qltb.getAll().get(index);
         txtId.setText(String.valueOf(tb.getId()));
         txtGiaTien.setText(String.valueOf(tb.getGiaTien()));
         txtTenTb.setText(tb.getTen());
@@ -81,19 +85,19 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
     }
 
     private void dodulieulenformDv(int index) {
-        QLDichVu dv = listdv.get(index);
+        QLDichVu dv = qldv.getAll().get(index);
         txtmaDV.setText(String.valueOf(dv.getId()));
         txtgiaDv.setText(String.valueOf(dv.getGia()));
         txttendv.setText(dv.getName());
         txtMotaDv.setText(dv.getMoTa());
         cboDonvi.setSelectedItem(dv.getDonVi());
         if (dv.getLoai() == 1) {
-            rdoloai1.setSelected(true);
+            jComboBox1.setSelectedIndex(0);
         } else {
-            rdoloai2.setSelected(true);
+            jComboBox1.setSelectedIndex(1);
         }
     }
-    
+
     private boolean kiemTraDuLieutb() {
         if (txtTenTb.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên không để tên trống");
@@ -118,7 +122,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         }
         return true;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,11 +164,8 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         txtgiaDv = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         cboDonvi = new javax.swing.JComboBox<>();
-        rdoloai1 = new javax.swing.JRadioButton();
-        rdoloai2 = new javax.swing.JRadioButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         btnThemDv = new javax.swing.JButton();
-        btnHienThi = new javax.swing.JButton();
-        btnHienThiDv = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -186,7 +187,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         jLabel1.setText("Quản Lý Thiết Bị");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setText("Mã");
+        jLabel6.setText("ID");
 
         jLabel3.setBackground(new java.awt.Color(51, 204, 255));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -195,7 +196,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Tình trạng");
 
-        cboTinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cũ", "Mới" }));
+        cboTinhtrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Còn ", "Không Còn" }));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Gía tiền");
@@ -308,7 +309,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         jLabel2.setText("Quản Lý Dịch Vụ");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel8.setText("Mã");
+        jLabel8.setText("ID");
 
         jLabel9.setBackground(new java.awt.Color(51, 204, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -332,10 +333,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
 
         cboDonvi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "khối", "lit" }));
 
-        rdoloai1.setSelected(true);
-        rdoloai1.setText("1");
-
-        rdoloai2.setText("2");
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cố Định ", "Không Cố Định" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -370,16 +368,10 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
                     .addComponent(jLabel12)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(24, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(rdoloai1)
-                        .addGap(52, 52, 52)
-                        .addComponent(rdoloai2)
-                        .addGap(41, 41, 41))))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(206, 206, 206)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -389,16 +381,18 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel8)
-                        .addComponent(txtmaDV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel9)
-                        .addComponent(rdoloai1)
-                        .addComponent(rdoloai2)))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8)
+                                .addComponent(txtmaDV, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -429,24 +423,6 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
             }
         });
 
-        btnHienThi.setBackground(new java.awt.Color(51, 204, 255));
-        btnHienThi.setText("Hiển Thị");
-        btnHienThi.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnHienThi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHienThiActionPerformed(evt);
-            }
-        });
-
-        btnHienThiDv.setBackground(new java.awt.Color(51, 204, 255));
-        btnHienThiDv.setText("Hiển Thị");
-        btnHienThiDv.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnHienThiDv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHienThiDvActionPerformed(evt);
-            }
-        });
-
         jPanel2.setBackground(new java.awt.Color(255, 204, 51));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -463,15 +439,11 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        tbllistbang.setBackground(new java.awt.Color(153, 204, 255));
         tbllistbang.setBorder(javax.swing.BorderFactory.createCompoundBorder());
         tbllistbang.setForeground(new java.awt.Color(0, 51, 255));
         tbllistbang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Tên", "SoLuong", "Gía tiền", "Mô tả", "Tình Trạng"
@@ -565,10 +537,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         tbllistbangDv.setForeground(new java.awt.Color(0, 51, 255));
         tbllistbangDv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Loai", "Tên", "ĐơnVi", "Gía", "Mô tả"
@@ -599,8 +568,8 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -626,15 +595,13 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(btnHienThi, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(84, 84, 84)
                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(41, 41, 41)
                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(37, 37, 37)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
+                        .addGap(56, 56, 56)
                         .addComponent(btnsapxep, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -642,48 +609,44 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(btnHienThiDv, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnThemDv, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73)
-                        .addComponent(btnSuaDv, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67)
-                        .addComponent(btnxoaDv, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(129, 129, 129)
+                        .addComponent(btnThemDv, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(96, 96, 96)
+                        .addComponent(btnSuaDv, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnxoaDv, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(7, 7, 7)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnHienThiDv)
                             .addComponent(btnThemDv)
                             .addComponent(btnSuaDv)
                             .addComponent(btnxoaDv))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnHienThi)
                             .addComponent(btnThem)
-                            .addComponent(btnSua)
                             .addComponent(jButton3)
-                            .addComponent(btnsapxep))
+                            .addComponent(btnsapxep)
+                            .addComponent(btnSua))
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -751,20 +714,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnThemDvActionPerformed
 
-    private void btnHienThiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHienThiActionPerformed
-        // TODO add your handling code here:
-        list = qltb.getAll();
-        dodulieu(list);
-    }//GEN-LAST:event_btnHienThiActionPerformed
-
-    private void btnHienThiDvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHienThiDvActionPerformed
-        // TODO add your handling code here:
-        listdv = qldv.getAll();
-        dodulieuDv(listdv);
-    }//GEN-LAST:event_btnHienThiDvActionPerformed
-
     private void tbllistbangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbllistbangMouseClicked
-        // TODO add your handling code here:
         int index = tbllistbang.getSelectedRow();
         dodulieulenform(index);
     }//GEN-LAST:event_tbllistbangMouseClicked
@@ -830,8 +780,6 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnHienThi;
-    private javax.swing.JButton btnHienThiDv;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnSuaDv;
     private javax.swing.JButton btnThem;
@@ -841,6 +789,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cboDonvi;
     private javax.swing.JComboBox<String> cboTinhtrang;
     private javax.swing.JButton jButton3;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -867,8 +816,6 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JRadioButton rdoloai1;
-    private javax.swing.JRadioButton rdoloai2;
     private javax.swing.JTable tbllistbang;
     private javax.swing.JTable tbllistbangDv;
     private javax.swing.JTextField txtGiaTien;

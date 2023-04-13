@@ -31,6 +31,10 @@ public class QLDichVu {
         this.trangThai = trangThai;
     }
 
+    public QLDichVu(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
@@ -88,6 +92,6 @@ public class QLDichVu {
     }
 
     public Object[] rowData() {
-        return new Object[]{loai, name, donVi, gia, moTa};
+        return new Object[]{loai == 1 ? "Cố Định" : "Không Cố Định", name, donVi, gia, moTa};
     }
 }

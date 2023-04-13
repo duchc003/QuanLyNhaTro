@@ -21,6 +21,7 @@ import util.ConnectDB;
 import viewmodel.DinhVuPhong;
 import viewmodel.KhachThuePhong;
 import viewmodel.PhongView;
+import viewmodel.QLDichVu;
 import viewmodel.ThietBiPhong;
 import viewmodel.TraPhong;
 
@@ -532,6 +533,72 @@ public class PhongRepository {
                         rs.getString(8)));
             }
             return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public List<ThongTInHooaDon> getALLHoaDonDinhVu() {
+        String query = "SELECT dbo.HoaDon.MaHoaDon, dbo.PhongTro.TenPhong, dbo.Tang.TenTang, dbo.LoaiPhong.TenLoaiPhong, dbo.LoaiPhong.GiaThue, dbo.HoaDon.NgayTaoHoaDon, dbo.HoaDon.NgayKetThuc, dbo.HoaDon.TrangThai\n"
+                + "FROM     dbo.HoaDon INNER JOIN\n"
+                + "                  dbo.PhongTro ON dbo.HoaDon.IDPhongTro = dbo.PhongTro.ID INNER JOIN\n"
+                + "                  dbo.LoaiPhong ON dbo.PhongTro.IDLoaiPhong = dbo.LoaiPhong.ID INNER JOIN\n"
+                + "                  dbo.Tang ON dbo.PhongTro.IDTang = dbo.Tang.ID";
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            List<ThongTInHooaDon> list = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new ThongTInHooaDon(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getLong(5),
+                        rs.getDate(6),
+                        rs.getDate(7),
+                        rs.getString(8)));
+            }
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public List<ThongTInHooaDon> getALLHoaDonThietBi() {
+        String query = "SELECT dbo.HoaDon.MaHoaDon, dbo.PhongTro.TenPhong, dbo.Tang.TenTang, dbo.LoaiPhong.TenLoaiPhong, dbo.LoaiPhong.GiaThue, dbo.HoaDon.NgayTaoHoaDon, dbo.HoaDon.NgayKetThuc, dbo.HoaDon.TrangThai\n"
+                + "FROM     dbo.HoaDon INNER JOIN\n"
+                + "                  dbo.PhongTro ON dbo.HoaDon.IDPhongTro = dbo.PhongTro.ID INNER JOIN\n"
+                + "                  dbo.LoaiPhong ON dbo.PhongTro.IDLoaiPhong = dbo.LoaiPhong.ID INNER JOIN\n"
+                + "                  dbo.Tang ON dbo.PhongTro.IDTang = dbo.Tang.ID";
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            List<ThongTInHooaDon> list = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new ThongTInHooaDon(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getLong(5),
+                        rs.getDate(6),
+                        rs.getDate(7),
+                        rs.getString(8)));
+            }
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public QLDichVu getALLID(String name) {
+        String query = "select ID from LoaiDinhVu where TenLoaiDinhVu =?";
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            ps.setObject(1, name);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new QLDichVu(
+                        rs.getInt(1));
+            }
         } catch (Exception e) {
         }
         return null;

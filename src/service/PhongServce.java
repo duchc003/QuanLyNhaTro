@@ -80,4 +80,8 @@ public interface PhongServce {
     
     String addHoaDonPhong(HoaDonPhong hoaDon);
     
+    List<ThongTInHooaDon> getALLHoaDonDinhVu();
+    
+    List<ThongTInHooaDon> getALLHoaDonThietBi();
+    
 }

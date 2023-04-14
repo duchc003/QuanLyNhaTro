@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Admin;
 import model.KhachThue;
 import model.LoaiPhong;
 import model.Phong;
@@ -109,7 +110,7 @@ public class PhongRepository {
         }
         return check > 0;
     }
-
+    
     public Phong getOneTang(String ten) {
         String query = "Select id From Tang where TenTang = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -123,7 +124,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public Phong getOneLoaiPhong(String ten) {
         String query = "Select id From LoaiPhong where TenLoaiPhong = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -334,7 +335,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public List<PhongView> getOnePhong(String ten) {
         String query = "SELECT dbo.PhongTro.TenPhong, dbo.Tang.TenTang, dbo.LoaiPhong.TenLoaiPhong, dbo.PhongTro.SoLuongNguoi, dbo.LoaiPhong.DienTich, dbo.LoaiPhong.GiaThue, dbo.PhongTro.TrangThai\n"
                 + "FROM     dbo.LoaiPhong INNER JOIN\n"
@@ -360,7 +361,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public KhachThuePhong findSoLuong(String ten) {
         String query = "select SoLuong from PhongTro where TenPhong = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -375,7 +376,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public boolean updateStatus(Phong phongView, int id) {
         String query = "UPDATE [dbo].[PhongTro]\n"
                 + "   SET [TrangThai] = ?\n"
@@ -389,7 +390,7 @@ public class PhongRepository {
         }
         return check > 0;
     }
-
+    
     public KhachThuePhong getByEmail(String ten) {
         String query = "select Email from KhachThue where HoVaTen = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -404,7 +405,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public List<Tang> getAllTang() {
         String query = "Select TenTang from Tang";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -419,7 +420,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public List<LoaiPhong> getAllLoaiPhong() {
         String query = "Select TenLoaiPhong from LoaiPhong";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -434,7 +435,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public Tang findByIdTang(String ten) {
         String query = "Select ID from Tang where TenTang = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -448,7 +449,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public LoaiPhong findByIdLoaiPhong(String ten) {
         String query = "Select ID from LoaiPhong where TenLoaiPhong = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -462,7 +463,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public LoaiPhong findByIdPhong(String ten) {
         String query = "Select id From PhongTro where TenPhong = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -476,7 +477,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public List<KhachThuePhong> getSoNguoi(String ten) {
         String query = "SELECT count(dbo.KhachThue.ID)\n"
                 + "FROM     dbo.KhachThue INNER JOIN\n"
@@ -495,7 +496,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public String maTrung(String ma) {
         String query = "SELECT [TenPhong] FROM [QLNT].[dbo].[PhongTro] where [TenPhong] = ? ";
         String text = null;
@@ -511,7 +512,7 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
     public List<ThongTInHooaDon> getALLHoaDonPhong() {
         String query = "SELECT dbo.HoaDon.MaHoaDon, dbo.PhongTro.TenPhong, dbo.Tang.TenTang, dbo.LoaiPhong.TenLoaiPhong, dbo.LoaiPhong.GiaThue, dbo.HoaDon.NgayTaoHoaDon, dbo.HoaDon.NgayKetThuc, dbo.HoaDon.TrangThai\n"
                 + "FROM     dbo.HoaDon INNER JOIN\n"
@@ -529,21 +530,23 @@ public class PhongRepository {
                         rs.getString(4),
                         rs.getLong(5),
                         rs.getDate(6),
-                        rs.getDate(7),
-                        rs.getString(8)));
+                        rs.getDate(7)));
             }
             return list;
         } catch (Exception e) {
         }
         return null;
     }
-
+    
     public List<ThongTInHooaDon> getALLHoaDonDinhVu() {
-        String query = "SELECT dbo.HoaDon.MaHoaDon, dbo.PhongTro.TenPhong, dbo.Tang.TenTang, dbo.LoaiPhong.TenLoaiPhong, dbo.LoaiPhong.GiaThue, dbo.HoaDon.NgayTaoHoaDon, dbo.HoaDon.NgayKetThuc, dbo.HoaDon.TrangThai\n"
-                + "FROM     dbo.HoaDon INNER JOIN\n"
-                + "                  dbo.PhongTro ON dbo.HoaDon.IDPhongTro = dbo.PhongTro.ID INNER JOIN\n"
-                + "                  dbo.LoaiPhong ON dbo.PhongTro.IDLoaiPhong = dbo.LoaiPhong.ID INNER JOIN\n"
-                + "                  dbo.Tang ON dbo.PhongTro.IDTang = dbo.Tang.ID";
+        String query = "SELECT dbo.HoaDon.MaHoaDon, dbo.PhongTro.TenPhong, dbo.Tang.TenTang, dbo.LoaiPhong.TenLoaiPhong, dbo.DinhVu.Name, dbo.HoaDon.NgayTaoHoaDon, dbo.HoaDon.NgayKetThuc,\n"
+                + "dbo.HoaDon.SoTien, dbo.HoaDon.TrangThai\n"
+                + "FROM     dbo.ChiTietDinhVu INNER JOIN\n"
+                + "dbo.HoaDon ON dbo.ChiTietDinhVu.IDHoaDon = dbo.HoaDon.ID INNER JOIN\n"
+                + "dbo.PhongTro ON dbo.ChiTietDinhVu.IDPhongTro = dbo.PhongTro.ID AND dbo.HoaDon.IDPhongTro = dbo.PhongTro.ID INNER JOIN\n"
+                + "dbo.DinhVu ON dbo.ChiTietDinhVu.IDDinhVu = dbo.DinhVu.ID INNER JOIN\n"
+                + "dbo.LoaiPhong ON dbo.PhongTro.IDLoaiPhong = dbo.LoaiPhong.ID INNER JOIN\n"
+                + "dbo.Tang ON dbo.PhongTro.IDTang = dbo.Tang.ID";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             List<ThongTInHooaDon> list = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
@@ -553,23 +556,22 @@ public class PhongRepository {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getLong(5),
+                        rs.getString(5),
                         rs.getDate(6),
                         rs.getDate(7),
-                        rs.getString(8)));
+                        rs.getLong(8)));
             }
             return list;
         } catch (Exception e) {
         }
         return null;
     }
-
+    
     public List<ThongTInHooaDon> getALLHoaDonThietBi() {
-        String query = "SELECT dbo.HoaDon.MaHoaDon, dbo.PhongTro.TenPhong, dbo.Tang.TenTang, dbo.LoaiPhong.TenLoaiPhong, dbo.LoaiPhong.GiaThue, dbo.HoaDon.NgayTaoHoaDon, dbo.HoaDon.NgayKetThuc, dbo.HoaDon.TrangThai\n"
-                + "FROM     dbo.HoaDon INNER JOIN\n"
-                + "                  dbo.PhongTro ON dbo.HoaDon.IDPhongTro = dbo.PhongTro.ID INNER JOIN\n"
-                + "                  dbo.LoaiPhong ON dbo.PhongTro.IDLoaiPhong = dbo.LoaiPhong.ID INNER JOIN\n"
-                + "                  dbo.Tang ON dbo.PhongTro.IDTang = dbo.Tang.ID";
+        String query = "SELECT dbo.HoaDon.MaHoaDon, dbo.Thiet_Bi.Ten, dbo.HoaDon.NgayTaoHoaDon, dbo.HoaDon.NgayKetThuc, dbo.HoaDon.SoTien\n"
+                + "FROM     dbo.ChiTietThietBi INNER JOIN\n"
+                + "                  dbo.Thiet_Bi ON dbo.ChiTietThietBi.IDThietBi = dbo.Thiet_Bi.ID INNER JOIN\n"
+                + "                  dbo.HoaDon ON dbo.ChiTietThietBi.IDHoaDon = dbo.HoaDon.ID";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             List<ThongTInHooaDon> list = new ArrayList<>();
             ResultSet rs = ps.executeQuery();
@@ -577,19 +579,16 @@ public class PhongRepository {
                 list.add(new ThongTInHooaDon(
                         rs.getString(1),
                         rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getLong(5),
-                        rs.getDate(6),
-                        rs.getDate(7),
-                        rs.getString(8)));
+                        rs.getDate(3),
+                        rs.getDate(4),
+                        rs.getLong(5)));
             }
             return list;
         } catch (Exception e) {
         }
         return null;
     }
-
+    
     public QLDichVu getALLID(String name) {
         String query = "select ID from LoaiDinhVu where TenLoaiDinhVu =?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
@@ -603,8 +602,21 @@ public class PhongRepository {
         }
         return null;
     }
-
+    
+    public Admin getTaiKhoan() {
+        String query = "select TenTaiKhoan,MatKhau from TaiKhoan";
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Admin(
+                        rs.getString(1), rs.getString(2));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
     public static void main(String[] args) {
-        System.out.println(new PhongRepository().getKhachThuePhong("P02").toString());
+        System.out.println(new PhongRepository().getALLHoaDonThietBi().toString());
     }
 }

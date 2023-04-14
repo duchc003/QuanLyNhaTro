@@ -94,7 +94,7 @@ public class HoaDonPhongSauKhiTaoHopDong extends javax.swing.JFrame {
             XWPFParagraph deadlinePara11 = document.createParagraph();
             deadlinePara11.setAlignment(ParagraphAlignment.RIGHT);
             deadlinePara11.createRun().setText("Xin cảm ơn quý khách hãy nhớ đóng tiền phòng đúng hạn!");
-            FileOutputStream out = new FileOutputStream("hoa-don-phong.docx");
+            FileOutputStream out = new FileOutputStream("C:\\Users\\ASUS\\OneDrive\\Documents\\NetBeansProjects\\QuanLyNhaTro\\Hóa Đơn Thiết Bị" + " " + txtPhong.getText() + ".docx");
             document.write(out);
             out.close();
         } catch (Exception e) {
@@ -303,8 +303,8 @@ public class HoaDonPhongSauKhiTaoHopDong extends javax.swing.JFrame {
                 jTextArea1.getText(),
                 "Đã Thanh Toán Toàn Bộ Tiền Phòng");
         JOptionPane.showMessageDialog(this, phongServce.addHoaDonPhong(hoaDonPhong));
-        this.dispose();
         inHoaDon();
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jLabel1AncestorAdded

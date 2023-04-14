@@ -340,14 +340,14 @@ public class HopDongRepository {
     }
 
     public List<HopDongViewModel> findByMaPhong(String ten) {
-        String query = "SELECT dbo.HopDong.MaHopDong, dbo.Tang.TenTang, dbo.PhongTro.TenPhong, dbo.LoaiPhong.TenLoaiPhong, dbo.KhachThue.HoVaTen, dbo.HopDong.NgayBatDau, dbo.HopDong.NgayKT, dbo.LoaiPhong.GiaThue, dbo.HopDong.TienCoc, \n"
-                + "dbo.HopDong.KiThanhToan, dbo.HopDong.TrangThai\n"
+        String query = "SELECT dbo.HopDong.MaHopDong, dbo.Tang.TenTang, dbo.PhongTro.TenPhong, dbo.LoaiPhong.TenLoaiPhong,KhachThue.HoVaTen, dbo.HopDong.NgayBatDau, dbo.HopDong.NgayKT, dbo.LoaiPhong.GiaThue, dbo.HopDong.TienCoc, \n"
+                + "dbo.HopDong.KiThanhToan,HopDong.TrangThai\n"
                 + "FROM     dbo.HopDong INNER JOIN\n"
-                + "dbo.KhachThue ON dbo.HopDong.IDKhachThue = dbo.KhachThue.ID INNER JOIN\n"
-                + "dbo.LoaiPhong ON dbo.HopDong.ID = dbo.LoaiPhong.ID INNER JOIN\n"
-                + "dbo.PhongTro ON dbo.HopDong.IDPhongTro = dbo.PhongTro.ID AND dbo.LoaiPhong.ID = dbo.PhongTro.IDLoaiPhong INNER JOIN\n"
+                + " dbo.KhachThue ON dbo.HopDong.IDKhachThue = dbo.KhachThue.ID INNER JOIN\n"
+                + "dbo.PhongTro ON dbo.HopDong.IDPhongTro = dbo.PhongTro.ID INNER JOIN\n"
+                + "dbo.LoaiPhong ON dbo.PhongTro.IDLoaiPhong = dbo.LoaiPhong.ID INNER JOIN\n"
                 + "dbo.Tang ON dbo.PhongTro.IDTang = dbo.Tang.ID\n"
-                + "where dbo.HopDong.MaHopDong = ?";
+                + "where PhongTro.TenPhong = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, ten);
             List<HopDongViewModel> list = new ArrayList<>();
@@ -441,8 +441,6 @@ public class HopDongRepository {
         }
         return null;
     }
-
-
 
     public static void main(String[] args) {
         System.out.println(new HopDongRepository().getAllHopDong().toString());

@@ -27,7 +27,7 @@ public class KhachThueSev {
        return this.rp.update(kt);
        
     }
-    public boolean delete(KhachThueThongKe kt){
-        return this.rp.delete(kt);
-}
+   public  ArrayList<KhachThueThongKe> tim(String id){
+       return rp.tim(id);
+    }
 }

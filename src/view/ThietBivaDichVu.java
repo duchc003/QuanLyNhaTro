@@ -33,8 +33,8 @@ public class ThietBivaDichVu extends javax.swing.JFrame {
      */
     public ThietBivaDichVu() {
         initComponents();
-//        dtm = (DefaultTableModel) tbllistbang.getModel();
-//        dtmdv = (DefaultTableModel) tbllistbangDv.getModel();
+        dtm = (DefaultTableModel) tbllistbang.getModel();
+        dtmdv = (DefaultTableModel) tbllistbangDv.getModel();
     }
 
     /**

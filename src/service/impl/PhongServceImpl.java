@@ -28,7 +28,7 @@ import viewmodel.TraPhong;
 public class PhongServceImpl implements PhongServce {
 
     private PhongRepository repo = new PhongRepository();
-    
+
     private HoaDonRepository hoaDonRe = new HoaDonRepository();
 
     @Override
@@ -183,9 +183,19 @@ public class PhongServceImpl implements PhongServce {
         boolean addHoaDonPhong = hoaDonRe.addHoaDonPhong(hoaDon);
         if (addHoaDonPhong) {
             return "add thành công";
-        }else{
+        } else {
             return "add thất bại";
         }
+    }
+
+    @Override
+    public List<ThongTInHooaDon> getALLHoaDonDinhVu() {
+        return repo.getALLHoaDonDinhVu();
+    }
+
+    @Override
+    public List<ThongTInHooaDon> getALLHoaDonThietBi() {
+        return repo.getALLHoaDonThietBi();
     }
 
 }

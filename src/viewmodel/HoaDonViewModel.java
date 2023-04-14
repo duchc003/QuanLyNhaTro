@@ -17,22 +17,34 @@ public class HoaDonViewModel {
     private Date ngayTao;
     private Date ngayKetThuc;
     private double tienPhong;
-    private double tienKhachDua;
+    private double tienKhachDua;    
     private String ghiChu;
+    String  tenTang;
+    String tenLoaiPhong;
+    long giaThue;
+    Date nt;
 
     public HoaDonViewModel() {
     }
 
-    public HoaDonViewModel(String maHoaDon, String tenPhong, Date ngayTao, Date ngayKetThuc, double tienPhong, double tienKhachDua, String ghiChu) {
-        this.maHoaDon = maHoaDon;
+//    public HoaDonViewModel(String maHoaDon, String tenPhong, Date ngayTao, Date ngayKetThuc, double tienPhong, double tienKhachDua, String ghiChu) {
+//        this.maHoaDon = maHoaDon;
+//        this.tenPhong = tenPhong;
+//        this.ngayTao = ngayTao;
+//        this.ngayKetThuc = ngayKetThuc;
+//        this.tienPhong = tienPhong;
+//        this.tienKhachDua = tienKhachDua;
+//        this.ghiChu = ghiChu;
+
+    public HoaDonViewModel(String tenPhong, String tenTang, String tenLoaiPhong, long giaThue, Date nt) {
         this.tenPhong = tenPhong;
-        this.ngayTao = ngayTao;
-        this.ngayKetThuc = ngayKetThuc;
-        this.tienPhong = tienPhong;
-        this.tienKhachDua = tienKhachDua;
-        this.ghiChu = ghiChu;
+        this.tenTang = tenTang;
+        this.tenLoaiPhong = tenLoaiPhong;
+        this.giaThue = giaThue;
+        this.nt = nt;
     }
 
+//    }
     public String getMaHoaDon() {
         return maHoaDon;
     }
@@ -109,7 +121,7 @@ public class HoaDonViewModel {
     }
 
     public Object[] toDataRow() {
-        return new Object[]{maHoaDon, tenPhong, ngayTao, ngayKetThuc, tienPhong, tienKhachDua, getThieu(), ghiChu, getTrangThai()};
+        return new Object[]{tenPhong,tenTang,tenLoaiPhong,tenPhong};
     }
 
 }

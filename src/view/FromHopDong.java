@@ -270,6 +270,7 @@ public class FromHopDong extends javax.swing.JFrame {
                 dhd1.txtTenPhong().setText(txtPhong.getText());
                 dhd1.txtTenKhach().setText(txtHoTenKhach.getText());
                 dhd1.txtTien().setText(txtTienPhong.getText());
+                dhd1.txtTienCoc().setText(txtTienCoc.getText());
                 dhd1.getTxtNgayBatDau().setDate(txtNgayBatDau.getDate());
                 dhd1.getTxtNgayKT().setDate(txtNgayKetThuc.getDate());
                 dhd1.setVisible(true);

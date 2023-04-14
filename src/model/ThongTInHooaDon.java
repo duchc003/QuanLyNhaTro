@@ -11,58 +11,57 @@ import java.util.Date;
  * @author ASUS
  */
 public class ThongTInHooaDon {
+
     String maHoaDon;
-    
+
     String tenPhong;
-    
+
     String tenTang;
-    
+
     String tenLoaiPhong;
-    
+
     String tenKhach;
-    
+
     String tenDinhVu;
-    
+
     String tenThietBi;
-    
+
     Date ngayBD;
-    
+
     Date ngayKT;
-    
+
     int soDien;
-    
+
     int soNuoc;
-    
+
     long soTien;
-    
+
     String trangThai;
 
-    public ThongTInHooaDon(String maHoaDon, String tenPhong, String tenTang, String tenLoaiPhong, String tenDinhVu, Date ngayBD, Date ngayKT, int soDien, int soNuoc,long soTien) {
+    // dịch vụ
+    public ThongTInHooaDon(String maHoaDon, String tenPhong, String tenTang, String tenLoaiPhong, String tdv, Date ngayBD, Date ngayKT, long soTien) {
         this.maHoaDon = maHoaDon;
         this.tenPhong = tenPhong;
         this.tenTang = tenTang;
         this.tenLoaiPhong = tenLoaiPhong;
-        this.tenDinhVu = tenDinhVu;
+        this.tenDinhVu = tdv;
         this.ngayBD = ngayBD;
         this.ngayKT = ngayKT;
         this.soDien = soDien;
         this.soNuoc = soNuoc;
-        this.soTien =this.soTien;
+        this.soTien = this.soTien;
     }
 
-    public ThongTInHooaDon(String maHoaDon, String tenPhong, String tenTang, String tenLoaiPhong,String tenKhach, String tenThietBi, Date ngayBD, Date ngayKT, long soTien) {
+    public ThongTInHooaDon(String maHoaDon, String tenThietBi, Date ngayBD, Date ngayKT, long soTien) {
         this.maHoaDon = maHoaDon;
-        this.tenPhong = tenPhong;
-        this.tenTang = tenTang;
-        this.tenLoaiPhong = tenLoaiPhong;
-        this.tenKhach =tenKhach;
         this.tenThietBi = tenThietBi;
         this.ngayBD = ngayBD;
         this.ngayKT = ngayKT;
         this.soTien = soTien;
     }
 
-    public ThongTInHooaDon(String maHoaDon, String tenPhong, String tenTang, String tenLoaiPhong,long soTien, Date ngayBD, Date ngayKT,  String trangThai) {
+    //phong
+    public ThongTInHooaDon(String maHoaDon, String tenPhong, String tenTang, String tenLoaiPhong, long soTien, Date ngayBD, Date ngayKT) {
         this.maHoaDon = maHoaDon;
         this.tenPhong = tenPhong;
         this.tenTang = tenTang;
@@ -70,7 +69,6 @@ public class ThongTInHooaDon {
         this.soTien = soTien;
         this.ngayBD = ngayBD;
         this.ngayKT = ngayKT;
-        this.trangThai = trangThai;
     }
 
     public String getMaHoaDon() {
@@ -176,6 +174,5 @@ public class ThongTInHooaDon {
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
-    
-    
+
 }

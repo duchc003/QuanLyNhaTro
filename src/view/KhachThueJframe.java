@@ -78,7 +78,6 @@ public class KhachThueJframe extends javax.swing.JInternalFrame {
 
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
-        btndelete = new javax.swing.JButton();
         btnupdate = new javax.swing.JButton();
         btnadd = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -117,14 +116,6 @@ public class KhachThueJframe extends javax.swing.JInternalFrame {
         jPanel1.setBackground(new java.awt.Color(186, 215, 233));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        btndelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btndelete.setText("Xóa");
-        btndelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btndeleteActionPerformed(evt);
-            }
-        });
-
         btnupdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnupdate.setText("Sửa");
         btnupdate.addActionListener(new java.awt.event.ActionListener() {
@@ -160,9 +151,7 @@ public class KhachThueJframe extends javax.swing.JInternalFrame {
                 .addComponent(btnupdate)
                 .addGap(30, 30, 30)
                 .addComponent(jButton5)
-                .addGap(41, 41, 41)
-                .addComponent(btndelete, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 51, Short.MAX_VALUE))
+                .addGap(0, 171, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,8 +160,7 @@ public class KhachThueJframe extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnadd)
                     .addComponent(jButton5)
-                    .addComponent(btnupdate)
-                    .addComponent(btndelete))
+                    .addComponent(btnupdate))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
@@ -414,30 +402,6 @@ public class KhachThueJframe extends javax.swing.JInternalFrame {
         lblanh.setIcon(reSizeImage(hinh));
     }//GEN-LAST:event_tableMouseClicked
 
-    private void btndeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btndeleteActionPerformed
-        index = table.getSelectedRow();
-        int id = Integer.parseInt(lblID.getText());
-        String name = txtTen.getText();
-        String ngay = txtNgay.getText();
-        int gt = RdoNam.isSelected() == true ? 1 : 0;
-        String email = txtEmail.getText();
-        String cmt = txtCMND.getText();
-        String quequan = txtQue.getText();
-        int sdt = Integer.parseInt(txtsodienthoai.getText());
-        Icon img = lblanh.getIcon();
-        String imgStr = img.toString();
-        String ghichu = txtGhichu.getText();
-        KhachThueThongKe kt = new KhachThueThongKe(id, name, ngay, gt, sdt, email, cmt, quequan, ghichu, imgStr);
-        int choose = JOptionPane.showConfirmDialog(this, "bạn có muốn xóa khách thuê này không");
-        if (choose == JOptionPane.YES_OPTION) {
-            sv.delete(kt);
-            filltotable();
-            JOptionPane.showMessageDialog(this, "xóa thành công");
-        } else {
-            JOptionPane.showMessageDialog(this, "bạn đã không xóa");
-        }
-    }//GEN-LAST:event_btndeleteActionPerformed
-
     private void btnupdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnupdateActionPerformed
         index = table.getSelectedRow();
         int id = Integer.parseInt(lblID.getText());
@@ -450,51 +414,76 @@ public class KhachThueJframe extends javax.swing.JInternalFrame {
         int sdt = Integer.parseInt(txtsodienthoai.getText());
         String imgStr = DuongdanAnh;
         String ghichu = txtGhichu.getText();
-        KhachThueThongKe kt = new KhachThueThongKe(id, name, ngay, gt, sdt, email, cmt, quequan, ghichu, imgStr);
-        sv.update(kt);
-        filltotable();
-    }//GEN-LAST:event_btnupdateActionPerformed
-
-    private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
         if (txtTen.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên không được để trống");
 
         } else if (txtCMND.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "chứng minh thư không được để trống");
-        } else if (txtNgay.getText().isEmpty()) {
+        }
+        else if (txtCMND.getText().length()<9||txtCMND.getText().length()>12) {
+            JOptionPane.showMessageDialog(this, "chứng minh thư phải là 9 hoặc 12 số");
+        }
+        else if (txtNgay.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "ngày sinh không được để trống");
         } else if (txtsodienthoai.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Số điện thoại không được để trống");
         } else if (txtsodienthoai.getText().matches("[a-zA-Z]")) {
             JOptionPane.showMessageDialog(this, "sdt không được chứa kí tự");
-        } else {
+        }
+        else if(txtsodienthoai.getText().length()<10 || txtsodienthoai.getText().length()>10){
+            JOptionPane.showMessageDialog(this,"số điện thoại phải đủ 10 số ");
+        }else if(txtEmail.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Email không được để trống");
+        }else if(!txtEmail.getText().matches("^(.+)@(.+)$")){
+            JOptionPane.showMessageDialog(this,"email phải đúng định dạng");
+        }
+        else {
+             KhachThueThongKe kt = new KhachThueThongKe(id, name, ngay, gt, sdt, email, cmt, quequan, ghichu, imgStr);
+        sv.update(kt);
+        filltotable();
+        }
+    }//GEN-LAST:event_btnupdateActionPerformed
+
+    private void btnaddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddActionPerformed
+         if (txtTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống");
+
+        } else if (txtCMND.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "chứng minh thư không được để trống");
+        }
+        else if (txtCMND.getText().length()<9||txtCMND.getText().length()>12) {
+            JOptionPane.showMessageDialog(this, "chứng minh thư phải là 9 hoặc 12 số");
+        }
+        else if (txtNgay.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "ngày sinh không được để trống");
+        } else if (txtsodienthoai.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Số điện thoại không được để trống");
+        } else if (txtsodienthoai.getText().matches("[a-zA-Z]")) {
+            JOptionPane.showMessageDialog(this, "sdt không được chứa kí tự");
+        }
+        else if(txtsodienthoai.getText().length()<10 || txtsodienthoai.getText().length()>10){
+            JOptionPane.showMessageDialog(this,"số điện thoại phải đủ 10 số ");
+        }else if(txtEmail.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this,"Email không được để trống");
+        }else if(!txtEmail.getText().matches("^(.+)@(.+)$")){
+            JOptionPane.showMessageDialog(this,"email phải đúng định dạng");
+        }
+        else {
             add();
         }
     }//GEN-LAST:event_btnaddActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        String tk = JOptionPane.showInputDialog("xin moi ban nhap ma khach thue");
-        for (KhachThueThongKe kt : sv.getall()) {
-            if (tk.equals(kt.getID() + "")) {
-                lblID.setText(kt.getID() + "");
-                txtTen.setText(kt.getHoten());
-                txtNgay.setText(kt.getNgaysinh());
-                if (kt.getGioitinh() == 1) {
-                    RdoNam.setSelected(true);
-                } else {
-                    RdoNu.setSelected(true);
-                }
-                txtEmail.setText(kt.getEmail());
-                txtCMND.setText(kt.getCmt());
-                txtQue.setText(kt.getQuequan());
-                txtsodienthoai.setText(kt.getSdt() + "");
-                txtGhichu.setText(kt.getGhichu());
-                String hinh = kt.getImg();
+        String tk = JOptionPane.showInputDialog("xin moi ban nhap ten khach thue");
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (KhachThueThongKe kt : sv.tim(tk)) {
 
-                this.lblanh.setIcon(reSizeImage(hinh));
-                break;
+            Object[] row = new Object[]{
+                kt.getID(), kt.getHoten(), kt.getNgaysinh(), kt.getGioitinh(), kt.getEmail(), kt.getCmt(), kt.getQuequan(), kt.getSdt(), kt.getGhichu(), kt.getImg()
+            };
+            model.addRow(row);
 
-            }
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -524,7 +513,6 @@ public class KhachThueJframe extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton RdoNu;
     private javax.swing.JButton btnadd;
     private javax.swing.JButton btnaddimg;
-    private javax.swing.JButton btndelete;
     private javax.swing.JButton btnupdate;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;

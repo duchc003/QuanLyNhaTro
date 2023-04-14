@@ -79,7 +79,7 @@ public class HoaDonDinhVu {
         this.loaiPhong = loaiPhong;
     }
 
-    public int getSoDien() {
+    public long getSoDien() {
         return soDien;
     }
 
@@ -87,7 +87,7 @@ public class HoaDonDinhVu {
         this.soDien = soDien;
     }
 
-    public int getSoNuoc() {
+    public long getSoNuoc() {
         return soNuoc;
     }
 

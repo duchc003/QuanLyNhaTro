@@ -28,6 +28,7 @@ public class DongHoaDon extends javax.swing.JFrame {
         txtTenPhong.setVisible(false);
         txtNgayBatDau.setVisible(false);
         txtNgayKT.setVisible(false);
+        txtTieenCo.setVisible(false);
     }
 
     /**
@@ -49,7 +50,7 @@ public class DongHoaDon extends javax.swing.JFrame {
         btnDongHetSoTienPhong = new javax.swing.JButton();
         txtTenKhach = new javax.swing.JTextField();
         txtNgayKT = new com.toedter.calendar.JDateChooser();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtTieenCo = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -114,6 +115,8 @@ public class DongHoaDon extends javax.swing.JFrame {
 
         txtTenKhach.setText("jTextField3");
 
+        txtTieenCo.setText("jTextField1");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -125,19 +128,19 @@ public class DongHoaDon extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtTieenCo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNgayKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(btnDongHetSoTienPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(txtTieenCo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(btnDongHetSoTienPhong, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtTenKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -163,29 +166,9 @@ public class DongHoaDon extends javax.swing.JFrame {
     private void btnDongTienKiDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDongTienKiDauActionPerformed
         HoaDonPhongSauKhiTaoHopDong donPhongSauKhiTaoHopDong = new HoaDonPhongSauKhiTaoHopDong();
         FromHopDong fromHopDong = new FromHopDong();
-        System.out.println(fromHopDong.cbbKiThanhToan().getSelectedItem());
-        if (fromHopDong.cbbKiThanhToan().getSelectedIndex() == 1) {
-            donPhongSauKhiTaoHopDong.soTienCanDong().setText(txtTien.getText());
-            System.out.println(txtTien.getText());
-        } else if (fromHopDong.cbbKiThanhToan().getSelectedIndex() == 2) {
-            // Nếu chọn thanh toán theo quý, tiền cọc sẽ là 3 tháng giá phòng
-            double giaPhong = Double.parseDouble(txtTien.getText());
-            int tienCoc = (int) Math.round(giaPhong * 3);
-            donPhongSauKhiTaoHopDong.soTienCanDong().setText(String.valueOf(tienCoc));
-            System.out.println(tienCoc);
-        } else if (fromHopDong.cbbKiThanhToan().getSelectedIndex() == 3) {
-            // Nếu chọn thanh toán theo năm, tiền cọc là 6 tháng giá phòng
-            double giaPhong = Double.parseDouble(txtTien.getText());
-            int tienCoc = (int) Math.round(giaPhong * 6);
-            donPhongSauKhiTaoHopDong.soTienCanDong().setText(String.valueOf(tienCoc));
-            System.out.println(tienCoc);
-        } else {
-            // Nếu không chọn kiểu thanh toán nào, tiền cọc là 0
-            donPhongSauKhiTaoHopDong.soTienCanDong().setText("0");
-        }
-        jComboBox1.setSelectedItem(fromHopDong.cbbKiThanhToan().getSelectedItem());
         donPhongSauKhiTaoHopDong.txtTenKhach().setText(txtTenKhach.getText());
         donPhongSauKhiTaoHopDong.txtPhong().setText(txtTenPhong.getText());
+        donPhongSauKhiTaoHopDong.soTienCanDong().setText(txtTieenCo.getText());
         donPhongSauKhiTaoHopDong.setDefaultCloseOperation(FromHopDong.DO_NOTHING_ON_CLOSE);
         donPhongSauKhiTaoHopDong.addWindowListener(new WindowAdapter() {
             @Override
@@ -270,7 +253,6 @@ public class DongHoaDon extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDongHetSoTienPhong;
     private javax.swing.JButton btnDongTienKiDau;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -278,6 +260,7 @@ public class DongHoaDon extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser txtNgayKT;
     private javax.swing.JTextField txtTenKhach;
     private javax.swing.JTextField txtTenPhong;
+    private javax.swing.JTextField txtTieenCo;
     private javax.swing.JTextField txtTien;
     // End of variables declaration//GEN-END:variables
 
@@ -291,6 +274,10 @@ public class DongHoaDon extends javax.swing.JFrame {
 
     public javax.swing.JTextField txtTien() {
         return txtTien;
+    }
+    
+    public javax.swing.JTextField txtTienCoc() {
+        return txtTieenCo;
     }
 
     public com.toedter.calendar.JDateChooser getTxtNgayBatDau() {

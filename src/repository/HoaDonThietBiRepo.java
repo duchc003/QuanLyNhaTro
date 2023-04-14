@@ -90,7 +90,7 @@ public class HoaDonThietBiRepo {
     }
     
     public HoaDonDinhVu findByIdThietBIChiTiet(int id) {
-        String query = "select ID from ChiTietThietBi where IDThietBi = ?";
+        String query = "select ID from ChiTietThietBi where IDHopDong = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             List<DinhVu> list = new ArrayList<>();
             ps.setObject(1, id);

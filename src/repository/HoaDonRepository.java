@@ -133,9 +133,10 @@ public class HoaDonRepository {
                 + "           ,[NgayTaoHoaDon]\n"
                 + "           ,[NgayKetThuc]\n"
                 + "           ,[SoTien]\n"
-                + "           ,[GhiChu])\n"
+                + "           ,[GhiChu]\n"
+                + "           ,[TrangThai])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?,?,?)";
+                + "           (?,?,?,?,?,?,?)";
         int check = 0;
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, hoaDon.getIDPhong());
@@ -144,6 +145,7 @@ public class HoaDonRepository {
             ps.setObject(4, hoaDon.getNgayKetThuc());
             ps.setObject(5, hoaDon.getSoTien());
             ps.setObject(6, hoaDon.getGhiChu());
+            ps.setObject(7, hoaDon.getTrangThai());
             check = ps.executeUpdate();
         } catch (Exception e) {
         }
@@ -238,7 +240,21 @@ public class HoaDonRepository {
     }
 
     public DinhVuTheoPhong findByIdDinhVu(int id) {
-        String query = "Select ID From ChiTietDinhVu Where IDDinhVu = ?";
+        String query = "Select ID From ChiTietDinhVu Where IDHopDong = ?";
+        try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
+            ps.setObject(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return new DinhVuTheoPhong(rs.getInt(1));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public DinhVuTheoPhong findByIDHopDong(int id) {
+        String query = "select ID from HopDong where IDPhongTro = ?";
         try ( Connection con = ConnectDB.getConnection();  PreparedStatement ps = con.prepareCall(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();

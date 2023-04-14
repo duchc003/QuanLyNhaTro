@@ -90,17 +90,35 @@ public class KhachthueRepo {
         }
         return false;
     }
-    public  boolean delete(KhachThueThongKe kt){
+    public  ArrayList<KhachThueThongKe> tim(String ten){
+        ArrayList<KhachThueThongKe>list= new ArrayList<>();
         try {
-            Connection cnn =ConnectDB.getConnection();
-            String sql="delete from KhachThue where ID=?";
-            PreparedStatement ps =cnn.prepareCall(sql);
-            ps.setInt(1,kt.getID());
+            Connection cnn = ConnectDB.getConnection();
+            String sql="select* from KhachThue where HoVaTen=?";
+            PreparedStatement ps= cnn.prepareCall(sql);
+            ps.setString(1,ten);
             ps.execute();
-            return true;
+            
+            ResultSet rs= ps.getResultSet();
+            
+            while(rs.next()){
+                int ID = rs.getInt("ID");
+                String name = rs.getString("HoVaTen");
+                String ns = rs.getString("NgaySinh");
+                int gt = rs.getInt("GioiTinh");
+                int sdt = rs.getInt("SDT");
+                String email = rs.getString("Email");
+                String cmt = rs.getString("CMND");
+                String quequan = rs.getString("QueQuan");
+                String ghichu = rs.getString("GhiChu");
+                String img = rs.getString("Image");
+                KhachThueThongKe kt = new KhachThueThongKe(ID, name, ns, gt, sdt, email, cmt, quequan, ghichu, img);
+                list.add(kt);
+                
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return list;
     }
 }

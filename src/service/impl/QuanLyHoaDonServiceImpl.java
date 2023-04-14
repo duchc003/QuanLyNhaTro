@@ -26,10 +26,10 @@ public class QuanLyHoaDonServiceImpl implements QuanLyHoaDonService {
         return hoaDonRepository.getAll();
     }
 
-    @Override
-    public List<HoaDonViewModel> getSearch(String phong) {
-        return hoaDonRepository.getSearch(phong);
-    }
+//    @Override
+//    public List<HoaDonViewModel> getSearch(String phong) {
+//        return hoaDonRepository.getSearch(phong);
+//    }
 
     @Override
     public String add(HoaDonViewModel hoaDonViewModel) {
@@ -51,10 +51,10 @@ public class QuanLyHoaDonServiceImpl implements QuanLyHoaDonService {
         }
     }
 
-    @Override
-    public List<HoaDonViewModel> getSearchTheoNgayTao(String ngay) {
-        return hoaDonRepository.getSearchTheoNgayTao(ngay);
-    }
+//    @Override
+//    public List<HoaDonViewModel> getSearchTheoNgayTao(String ngay) {
+//        return hoaDonRepository.getSearchTheoNgayTao(ngay);
+//    }
 
     @Override
     public String dateTime() {
@@ -67,6 +67,16 @@ public class QuanLyHoaDonServiceImpl implements QuanLyHoaDonService {
     @Override
     public List<String> getTenPhong() {
         return hoaDonRepository.getTenPhong();
+    }
+
+    @Override
+    public List<HoaDonViewModel> getSearch(String phong) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<HoaDonViewModel> getSearchTheoNgayTao(String ngay) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

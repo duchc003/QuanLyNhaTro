@@ -80,6 +80,11 @@ public class HopDongForm extends javax.swing.JInternalFrame {
         tblHopDong = new javax.swing.JTable();
 
         btnCapNhap.setText("Cập Nhập");
+        btnCapNhap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapNhapActionPerformed(evt);
+            }
+        });
         jPopupMenu1.add(btnCapNhap);
 
         btnGiaHan.setText("Gia Hạn");
@@ -286,6 +291,11 @@ public class HopDongForm extends javax.swing.JInternalFrame {
             jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
         }
     }//GEN-LAST:event_tblHopDongMousePressed
+
+    private void btnCapNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhapActionPerformed
+        FromHopDong dong = new FromHopDong();
+        dong.setVisible(true);
+    }//GEN-LAST:event_btnCapNhapActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

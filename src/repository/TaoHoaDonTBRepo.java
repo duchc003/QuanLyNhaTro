@@ -24,13 +24,12 @@ public class TaoHoaDonTBRepo {
             Connection cnn = ConnectDB.getConnection();
             String sql = "insert into HoaDon(IDPhongTro,MaHoaDon,NgayTaoHoaDon,NgayKetThuc,SoTien,GhiChu) values(?,?,?,?,?,?)";
             PreparedStatement ps = cnn.prepareCall(sql);
-            ps.setInt(1,tb.getIdkhachThue());
-            ps.setObject(2, tb.getIdPhong());
-            ps.setObject(3, tb.getMaHD());
-            ps.setObject(4, tb.getNgaytao());
-            ps.setObject(5, tb.getNgaykt());
-            ps.setObject(6, tb.getSoTien());
-            ps.setObject(7, tb.getGhichu());
+            ps.setObject(1, tb.getIdPhong());
+            ps.setObject(2, tb.getMaHD());
+            ps.setObject(3, tb.getNgaytao());
+            ps.setObject(4, tb.getNgaykt());
+            ps.setObject(5, tb.getSoTien());
+            ps.setObject(6, tb.getGhichu());
             ps.execute();
             return true;
         } catch (Exception e) {

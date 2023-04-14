@@ -393,7 +393,6 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(2, 2, 2)))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel11)
@@ -533,7 +532,7 @@ public class ThietBiDinhVu extends javax.swing.JInternalFrame {
         );
 
         tbllistbangDv.setBorder(javax.swing.BorderFactory.createCompoundBorder());
-        tbllistbangDv.setForeground(new java.awt.Color(255, 255, 255));
+        tbllistbangDv.setForeground(new java.awt.Color(51, 153, 255));
         tbllistbangDv.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
